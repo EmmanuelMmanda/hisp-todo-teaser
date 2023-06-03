@@ -1,0 +1,70 @@
+.TodoCard__inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-radius: 5px;
+  width: 100%;
+  border-radius: 10px;
+  background-color: var(--card-background);
+  padding: 10px;
+}
+
+.TodoCard__inputGroup input {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  padding: 5px;
+  margin-top: 5px;
+  font-size: inherit;
+  border-bottom: #ccccccd2 1px solid;
+
+}
+
+.TodoCard__actions__btn {
+  background-color: rgba(53, 124, 80, 0.861);
+}
+.TodoCard__actions__btn > span {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  align-items: center;
+  font-size: 22px;
+}
+.TodoCard__actions__delete_btn {
+  background-color: rgba(124, 53, 53, 0.861);
+}
+.TodoCard__actions__delete_btn > span {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  align-items: center;
+  font-size: 22px;
+}
+textarea {
+  outline: none;
+  background-color: transparent;
+  height: 90px;
+  padding: 5px;
+  font-family: inherit;
+  border: none;
+  border-bottom: #ccc 1px solid;
+}
+textarea:focus {
+  border: none;
+  border-bottom: #ccc 1px solid;
+}
+
+.TodoCard__inputGroup_inputs_desc,
+.TodoCard__inputGroup_inputs_title {
+  height: 100px;
+  resize: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.TodoCard__inputGroup_inputs_desc,
+.TodoCard__inputGroup_inputs_title label {
+  font-size: 1.5rem;
+  margin: 0;
+  padding: 0;
+}

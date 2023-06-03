@@ -1,0 +1,54 @@
+.heading {
+  text-align: left;
+  text-decoration: underline;
+  padding: 5px;
+}
+
+.TodoCard__listItem {
+  background-color: var(--todo-item-bg);
+  display: flex;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 10px;
+  justify-content: space-between;
+}
+.TodoCard__listItem:hover {
+  background-color: rgba(0, 0, 0, 0.612);
+  transition: background-color 0.5s ease-in-out;
+}
+.TodoCard__listItem__todo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.TodoCard__listItem__todo h2 {
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+.TodoCard__listItem__todo p {
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+.TodoCard__listItem__description {
+  text-align: left;
+}
+.TodoCard__listItem__actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  align-items: flex-end;
+}
+.TodoCard__listItem__actions button {
+  margin: 0;
+  padding: 0.5rem;
+  text-align: left;
+  color: var(--todo-list-text);
+  cursor: pointer;
+}
+
+.TodoCard__listItem__date {
+  display: flex;
+}

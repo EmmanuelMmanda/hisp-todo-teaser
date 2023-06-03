@@ -1,0 +1,5 @@
+.TodoCard {
+  background-color: var(--card-background);
+  padding: 10px;
+  border-radius: 10px;
+}
