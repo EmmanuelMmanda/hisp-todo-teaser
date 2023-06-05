@@ -1,14 +1,21 @@
 import styles from "./todoList.module.css";
-import todoData from "../../assets/dummyData.json";
-import { useState } from "react";
+// import todoData from "../../assets/dummyData.json";
+import {  useState } from "react";
 import TodoModel from "../UI/model/todoModel";
+import { fetchAllTodos } from "../../api";
 
 const TodoList = () => {
   const [showUpdateModel, setShowUpdateModel] = useState(false);
   const [todoToUpdate, setTodoToUpdate] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [todoToDelete, setTodoToDelete] = useState(null);
+  const [todoData, setTodoData] = useState({});
 
+  let Data = fetchAllTodos();
+  setTodoData(Data);
+  console.log(Data);
+
+  
   const todos = todoData.entries.map((todo) => {
     return (
       <div className={styles.TodoCard__listItem} key={todo.key}>
@@ -26,8 +33,7 @@ const TodoList = () => {
                 {new Date(todo.value.lastUpdated).toLocaleDateString()}
               </span>
             </span>
-            {
-              todo.value.completed == 'true' ? (
+            {todo.value.completed == "true" ? (
               <span className={styles.TodoCard__listItem__date}>
                 <box-icon name="list-check" color="#0dce07"></box-icon>
                 <span>completed</span>

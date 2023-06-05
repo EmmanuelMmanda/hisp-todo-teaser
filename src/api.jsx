@@ -1,5 +1,6 @@
 import axios from "axios";
 import Base64 from "base-64";
+// import {toast} from 'react-toastify'
 
 // urls
 const API_BASE_URL =
@@ -16,22 +17,28 @@ const ENCODE_CREDENTIALS = (username, pass) =>
 // headers auth
 const AUTH_HEADERS = {
   "Content-Type": "application/json",
-  Authorization: `Basic ${ENCODE_CREDENTIALS("admin", "district")}`,
+  "Authorization": `Basic ${ENCODE_CREDENTIALS("admin", "district")}`,
+  "Accept": "*/*",
+  "Accept-Encoding": "gzip, deflate, br",
+  "Connection": "keep-alive",
+  "Host": "dev.hisptz.com"
 };
+
 
 // Fetching all todos
 export const fetchAllTodos = async () => {
   try {
+    console.log(AUTH_HEADERS);
     const response = await axios.get(GET_ALL_TODOS_URL, {
       headers: AUTH_HEADERS,
     });
+
     return response.data;
   } catch (error) {
-    console.error("Error fetching todos:", error);
+    console.error("Error fetching todos-> ", error);
     throw error;
   }
 };
-
 // adding a new todo passing todo-is in the url
 export const addNewTodo = async (todo) => {
   try {

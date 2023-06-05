@@ -48,10 +48,21 @@ const InputGroup = (props) => {
           </div>
           {/* pass a todo key if updating data */}
           {props.updateData && (
-            <input
-              type="hidden"
-              value={props.updateData ? props.updateData.key : ""}
-            />
+            <>
+              <h2 htmlFor="todo-atatus">To-do Status</h2>
+              <select
+                name="todo-status"
+                className={styles.select}
+                defaultValue={props.updateData.value.completed}
+              >
+                <option value="completed">Completed</option>
+                <option value="pending">Pendig</option>
+              </select>
+              <input
+                type="hidden"
+                value={props.updateData ? props.updateData.key : ""}
+              />
+            </>
           )}
         </div>
       )}
