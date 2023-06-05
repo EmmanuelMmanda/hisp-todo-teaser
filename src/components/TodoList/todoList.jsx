@@ -1,22 +1,15 @@
 import styles from "./todoList.module.css";
-// import todoData from "../../assets/dummyData.json";
-import {  useState } from "react";
+import { useState } from "react";
 import TodoModel from "../UI/model/todoModel";
-import { fetchAllTodos } from "../../api";
+import propTypes from "prop-types";
 
-const TodoList = () => {
+const TodoList = (props) => {
   const [showUpdateModel, setShowUpdateModel] = useState(false);
   const [todoToUpdate, setTodoToUpdate] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [todoToDelete, setTodoToDelete] = useState(null);
-  const [todoData, setTodoData] = useState({});
 
-  let Data = fetchAllTodos();
-  setTodoData(Data);
-  console.log(Data);
-
-  
-  const todos = todoData.entries.map((todo) => {
+  const todos = props.data.map((todo) => {
     return (
       <div className={styles.TodoCard__listItem} key={todo.key}>
         <div className={styles.TodoCard__listItem__todo}>
@@ -76,22 +69,32 @@ const TodoList = () => {
       {showUpdateModel && (
         <TodoModel
           updatetodo={todoToUpdate}
+          onUpdateTodo={props.onUpdateTodo}
           onClose={() => setShowUpdateModel(false)}
         />
       )}
       {showDeleteModal && (
         <TodoModel
           deletetodo={todoToDelete}
+          onDeleteTodo={props.onDeleteTodo}
           onClose={() => setShowDeleteModal(false)}
         />
       )}
       <section className={styles.TodoCard__list}>
         <h3 className={styles.heading}>Tasks</h3>
+
         {/* actual todo */}
+        {props.data.length === 0 && <p>No tasks !</p>}
         {todos}
       </section>
     </>
   );
+};
+
+TodoList.propTypes = {
+  data: propTypes.array.isRequired,
+  onDeleteTodo: propTypes.func,
+  onUpdateTodo: propTypes.func,
 };
 
 export default TodoList;

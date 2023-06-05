@@ -1,12 +1,43 @@
 import { useState } from "react";
 import styles from "./input.module.css";
 import propTypes from "prop-types";
+import shortid from "shortid";
+
+// generate a random id for each todo
+const uniqueId = shortid.generate();
 
 const InputGroup = (props) => {
   const [isLoading, setIsLoading] = useState(false);
 
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+    props.onClose
+    //  check if its aading data
+    props.addTodo &&
+      props.onAddTodo({
+        key: `Todo-${uniqueId}`,
+        value: {
+          title: event.target.title.value,
+          created: new Date().toLocaleString(),
+          completed: "false",
+          description: event.target.description.value,
+          lastUpdated: new Date().toLocaleString(),
+        },
+      });
+    props.updateData &&
+      props.onUpdateTodo(event.target.key.value, {
+        title: event.target.title.value,
+        description: event.target.description.value,
+        completed: event.target.todoStatus.value,
+      });
+  };
+
   return (
-    <div id="inputGroup" className={styles.TodoCard__inputGroup}>
+    <form
+      id="inputGroup"
+      className={styles.TodoCard__inputGroup}
+      onSubmit={handleFormSubmit}
+    >
       <h2 style={{ margin: 0, padding: 0 }}>
         {props.addTodo && "Add Todo"}
         {props.updateData && "Update Todo"}
@@ -31,6 +62,8 @@ const InputGroup = (props) => {
               type="text"
               id="title"
               placeholder="Enter todo title"
+              name="title"
+              required
               defaultValue={
                 props.updateData ? props.updateData.value.title : ""
               }
@@ -39,7 +72,9 @@ const InputGroup = (props) => {
           <div className={styles.TodoCard__inputGroup_inputs_desc}>
             <label htmlFor="todo-descr">To-do Description</label>
             <textarea
+              required
               id="todo-descr"
+              name="description"
               placeholder="Enter todo description"
               defaultValue={
                 props.updateData ? props.updateData.value.description : ""
@@ -51,17 +86,14 @@ const InputGroup = (props) => {
             <>
               <h2 htmlFor="todo-atatus">To-do Status</h2>
               <select
-                name="todo-status"
+                name="todoStatus"
                 className={styles.select}
                 defaultValue={props.updateData.value.completed}
               >
                 <option value="completed">Completed</option>
                 <option value="pending">Pendig</option>
               </select>
-              <input
-                type="hidden"
-                value={props.updateData ? props.updateData.key : ""}
-              />
+              <input type="hidden" name="key" value={props.updateData.key} />
             </>
           )}
         </div>
@@ -69,7 +101,9 @@ const InputGroup = (props) => {
       {!props.deletetodo && (
         <button
           className={styles.TodoCard__actions__btn}
-          onClick={() => setIsLoading(true)}
+          onClick={() => {
+            setIsLoading(true);
+          }}
         >
           {isLoading && (
             <span className="submit_btn">
@@ -103,7 +137,9 @@ const InputGroup = (props) => {
       {props.deletetodo && (
         <button
           className={styles.TodoCard__actions__delete_btn}
-          onClick={() => setIsLoading(true)}
+          onClick={() => {
+            props.onDeleteTodo(props.deletetodo.key);
+          }}
         >
           {isLoading && (
             <span className="submit_btn">
@@ -124,7 +160,7 @@ const InputGroup = (props) => {
           )}
         </button>
       )}
-    </div>
+    </form>
   );
 };
 
@@ -132,6 +168,10 @@ InputGroup.propTypes = {
   updateData: propTypes.object,
   deletetodo: propTypes.object,
   addTodo: propTypes.bool,
+  onAddTodo: propTypes.func,
+  onDeleteTodo: propTypes.func,
+  onUpdateTodo: propTypes.func,
+  onClose: propTypes.func,
 };
 
 export default InputGroup;

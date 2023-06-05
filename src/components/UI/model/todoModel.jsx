@@ -19,11 +19,26 @@ const TodoModel = (props) => {
               className={styles.close}
               style={{ cursor: "pointer", float: "right" }}
             ></box-icon>
-            {props.deletetodo && <InputGroup deletetodo={props.deletetodo} />}
-              
-            {props.updatetodo && ( <InputGroup updateData={props.updatetodo} /> )}
-             
-            { props.addTodo && ( <InputGroup addTodo={props.addTodo} />) }
+            {props.deletetodo && (
+              <InputGroup
+                deletetodo={props.deletetodo}
+                onDeleteTodo={props.onDeleteTodo}
+                onClose={props.onClose}
+              />
+            )}
+
+            {props.updatetodo && (
+              <InputGroup
+                updateData={props.updatetodo}
+                onUpdateTodo={props.onUpdateTodo}
+                onClose={props.onClose}
+
+              />
+            )}
+
+            {props.addTodo && (
+              <InputGroup addTodo={props.addTodo} onAddTodo={props.onAddTodo} />
+            )}
           </div>
         </div>
       </>
@@ -46,6 +61,9 @@ TodoModel.propTypes = {
   deletetodo: propTypes.object,
   updatetodo: propTypes.object,
   addTodo: propTypes.bool,
+  onAddTodo: propTypes.func,
+  onDeleteTodo: propTypes.func,
+  onUpdateTodo: propTypes.func,
 };
 
 export default TodoModel;
