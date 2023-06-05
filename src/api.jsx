@@ -17,27 +17,18 @@ const ENCODE_CREDENTIALS = (username, pass) =>
 // headers auth
 const AUTH_HEADERS = {
   "Content-Type": "application/json",
-  "Authorization": `Basic ${ENCODE_CREDENTIALS("admin", "district")}`,
-  "Accept": "*/*",
-  "Accept-Encoding": "gzip, deflate, br",
-  "Connection": "keep-alive",
-  "Host": "dev.hisptz.com"
+  Authorization: `Basic ${ENCODE_CREDENTIALS("admin", "district")}`,
+  Accept: "*/*",
+  // "Access-Control-Allow-Origin": "http://localhost",
 };
-
-
 // Fetching all todos
 export const fetchAllTodos = async () => {
-  try {
-    console.log(AUTH_HEADERS);
-    const response = await axios.get(GET_ALL_TODOS_URL, {
-      headers: AUTH_HEADERS,
-    });
-
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching todos-> ", error);
-    throw error;
-  }
+  console.log(AUTH_HEADERS);
+  const response = await axios.get(GET_ALL_TODOS_URL, {
+    headers: AUTH_HEADERS,
+  });
+  console.log(response);
+  return response.data;
 };
 // adding a new todo passing todo-is in the url
 export const addNewTodo = async (todo) => {
