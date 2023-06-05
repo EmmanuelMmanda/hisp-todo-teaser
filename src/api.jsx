@@ -1,5 +1,6 @@
 import axios from "axios";
 import Base64 from "base-64";
+import { toast } from "react-toastify";
 // import {toast} from 'react-toastify'
 
 // urls
@@ -7,8 +8,8 @@ const API_BASE_URL =
   "https://dev.hisptz.com/dhis2/api/dataStore/emmanuel_mmanda";
 const GET_ALL_TODOS_URL = `${API_BASE_URL}?fields=.`;
 const ADD_TODO_URL = (todo) => `${API_BASE_URL}/${todo.id}`;
-const UPDATE_TODO_URL = (todo) => `${API_BASE_URL}/${todo.id}`;
-const DELETE_TODO_URL = (todo_id) => `${API_BASE_URL}/${todo_id}`;
+const UPDATE_TODO_URL = (id) => `${API_BASE_URL}/${id}`;
+const DELETE_TODO_URL = (todo_key) => `${API_BASE_URL}/${todo_key}`;
 
 // method to encode credentials
 const ENCODE_CREDENTIALS = (username, pass) =>
@@ -19,26 +20,30 @@ const AUTH_HEADERS = {
   "Content-Type": "application/json",
   Authorization: `Basic ${ENCODE_CREDENTIALS("admin", "district")}`,
   Accept: "*/*",
-  // "Access-Control-Allow-Origin": "http://localhost",
 };
+
 // Fetching all todos
 export const fetchAllTodos = async () => {
-  console.log(AUTH_HEADERS);
-  const response = await axios.get(GET_ALL_TODOS_URL, {
-    headers: AUTH_HEADERS,
-  });
-  console.log(response);
-  return response.data;
-};
-// adding a new todo passing todo-is in the url
-export const addNewTodo = async (todo) => {
   try {
-    const response = await axios.post(
-      ADD_TODO_URL,
-      todo,
-      { headers: AUTH_HEADERS },
-      todo
-    );
+    const response = await axios.get(GET_ALL_TODOS_URL, {
+      headers: AUTH_HEADERS,
+    });
+
+    return response.data;
+  } catch (error) {
+    toast.dismiss();
+    console.error("Error fetching todos", error);
+    toast.error("Error Fetching Todos", { limit: 1 });
+    throw error;
+  }
+};
+// adding a new todo passing todo-id in the url
+export const addNewTodo = async (todo) => {
+  console.log("to be added ", todo);
+  try {
+    const response = await axios.post(ADD_TODO_URL(todo), todo, {
+      headers: AUTH_HEADERS,
+    });
     return response.data;
   } catch (error) {
     console.error("Error adding todo:", error);
@@ -46,14 +51,13 @@ export const addNewTodo = async (todo) => {
   }
 };
 
-// Update a todo given its id
-export const updateTodo = async (id, todo) => {
+// Update a todo
+export const updateATodo = async (id, todo) => {
   try {
-    const response = await axios.put(
-      UPDATE_TODO_URL,
-      { headers: AUTH_HEADERS },
-      todo
-    );
+    console.log(UPDATE_TODO_URL(id));
+    const response = await axios.put(UPDATE_TODO_URL(id), todo, {
+      headers: AUTH_HEADERS,
+    });
     return response.data;
   } catch (error) {
     console.error("Error updating todo:", error);
@@ -62,9 +66,12 @@ export const updateTodo = async (id, todo) => {
 };
 
 // Delete a todo
-export const deleteTodo = async (id) => {
+export const deleteATodo = async (id) => {
   try {
-    await axios.delete(DELETE_TODO_URL(id), { headers: AUTH_HEADERS });
+    const res = await axios.delete(DELETE_TODO_URL(id), {
+      headers: AUTH_HEADERS,
+    });
+    return res;
   } catch (error) {
     console.error("Error deleting todo:", error);
     throw error;

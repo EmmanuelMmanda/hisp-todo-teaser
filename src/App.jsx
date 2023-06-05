@@ -6,47 +6,61 @@ import Card from "./components/UI/card/card";
 import TodoList from "./components/TodoList/todoList";
 import Button from "./components/UI/button/button";
 import TodoModel from "./components/UI/model/todoModel";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import Tododata from "./assets/dummyData.json";
+// import Tododata from "./assets/dummyData.json";
+import { fetchAllTodos, addNewTodo, deleteATodo, updateATodo } from "./api";
 
 const App = () => {
-  let data = Tododata.entries;
-  const [todoData, setTodoData] = useState(data);
-  const [showTodomodal, setShowTodoModla] = useState(false);
-
-  const addTodos = (todo) => {
-    console.log(todo);
-    setTodoData((prevState) => [...prevState, todo]);
-    toast.success("Todo added Succesfully !");
+  const fetchTodos = async () => {
+    const todos = await fetchAllTodos();
+    setTodoData(todos.entries);
   };
 
-  const deleteTodo = (id) => {
-    console.log("Deleting todo with id:", id);
+  useEffect(() => {
+    fetchTodos();
+  });
+
+  const [todoData, setTodoData] = useState([]);
+  const [showTodomodal, setShowTodoModla] = useState(false);
+
+  const addTodos = async (todo) => {
+    // send the todo request
+    const res = await addNewTodo(todo);
+    res.status == "OK"
+      ? toast.success("Todo added Succesfully !")
+      : toast.error("Failed to fetch todos!");
+  };
+
+  const deleteTodo = async (id) => {
+    const data = await deleteATodo(id);
     setTodoData((prevState) => {
       const updatedTodos = prevState.filter((todo) => todo.key !== id);
       return updatedTodos;
     });
-    toast.success("Todo deleted successfully!");
+    data.status == 200
+      ? toast.success("Todo deleted successfully!")
+      : toast.error("Failed to delete todo!");
   };
 
-  const updateTodo = (id, updatedTodo) => {
+  const updateTodo = async (id, updatedTodo) => {
     console.log("Updating todo with id:", id);
-    setTodoData((prevState) =>
-      prevState.map((todo) =>
-        todo.key === id ? { ...todo, ...updatedTodo } : todo
-      )
-    );
-    toast.success("Todo updated successfully!");
+    const update = await updateATodo(id, updatedTodo);
+    console.log(update);
+    update.status == "OK"
+      ? toast.success("Todo updated successfully!")
+      : toast.error("Failed to Update todo!");
   };
+
+  // console.log("curent data ", todoData[0]);
 
   return (
     <div className="App">
       <ToastContainer
         position="top-center"
-        limit={3}
+        limit={2}
         autoClose={5000}
-        hideProgressBar={true}
+        hideProgressBar={false}
         closeOnClick
         draggable
         pauseOnHover

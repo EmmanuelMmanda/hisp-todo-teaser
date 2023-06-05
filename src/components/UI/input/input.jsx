@@ -11,24 +11,24 @@ const InputGroup = (props) => {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    props.onClose
+    props.onClose;
     //  check if its aading data
     props.addTodo &&
       props.onAddTodo({
-        key: `Todo-${uniqueId}`,
-        value: {
-          title: event.target.title.value,
-          created: new Date().toLocaleString(),
-          completed: "false",
-          description: event.target.description.value,
-          lastUpdated: new Date().toLocaleString(),
-        },
+        id: `Todo-${uniqueId}`,
+        title: event.target.title.value,
+        created: new Date().toISOString(),
+        completed: "false",
+        description: event.target.description.value,
+        lastUpdated: new Date().toISOString(),
       });
     props.updateData &&
       props.onUpdateTodo(event.target.key.value, {
+        id: event.target.key.value,
         title: event.target.title.value,
         description: event.target.description.value,
         completed: event.target.todoStatus.value,
+        lastUpdated: new Date().toISOString(),
       });
   };
 
@@ -72,7 +72,6 @@ const InputGroup = (props) => {
           <div className={styles.TodoCard__inputGroup_inputs_desc}>
             <label htmlFor="todo-descr">To-do Description</label>
             <textarea
-              required
               id="todo-descr"
               name="description"
               placeholder="Enter todo description"
