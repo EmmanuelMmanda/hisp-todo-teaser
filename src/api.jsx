@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 const API_BASE_URL =
   "https://dev.hisptz.com/dhis2/api/dataStore/emmanuel_mmanda";
 const GET_ALL_TODOS_URL = `${API_BASE_URL}?fields=.`;
+const GET_TODO_BY_PAGE = (pgno) => `${API_BASE_URL}?fields=.&page=${pgno}&pageSize=4`;
 const ADD_TODO_URL = (todo) => `${API_BASE_URL}/${todo.id}`;
 const UPDATE_TODO_URL = (id) => `${API_BASE_URL}/${id}`;
 const DELETE_TODO_URL = (todo_key) => `${API_BASE_URL}/${todo_key}`;
@@ -45,7 +46,7 @@ export const addNewTodo = async (todo) => {
       headers: AUTH_HEADERS,
     });
     console.log(" added ", response.data);
-   
+
     return response.data;
   } catch (error) {
     toast.error("Error adding todo");
@@ -77,6 +78,22 @@ export const deleteATodo = async (id) => {
     return res;
   } catch (error) {
     console.error("Error deleting todo:", error);
+    throw error;
+  }
+};
+
+export const fetchTodosByPage = async (page) => {
+  try {
+    const url = GET_TODO_BY_PAGE(page);
+    const response = await axios.get(url, {
+      headers: AUTH_HEADERS,
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    toast.dismiss();
+    console.error("Error fetching todos", error);
+    toast.error("Error Fetching Todos", { limit: 1 });
     throw error;
   }
 };

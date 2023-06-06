@@ -6,17 +6,31 @@ import Card from "./components/UI/card/card";
 import TodoList from "./components/TodoList/todoList";
 import Button from "./components/UI/button/button";
 import TodoModel from "./components/UI/model/todoModel";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 // import Tododata from "./assets/dummyData.json";
-import { fetchAllTodos, addNewTodo, deleteATodo, updateATodo } from "./api";
+import {
+  fetchAllTodos,
+  addNewTodo,
+  deleteATodo,
+  updateATodo,
+  fetchTodosByPage,
+} from "./api";
 
 const App = () => {
+  const fetchTodosPage = async (pageno) => {
+    const todos = await fetchTodosByPage(pageno);
+    console.log(todos);
+    setTodoData(todos.entries);
+  };
+
   const fetchTodos = async () => {
     const todos = await fetchAllTodos();
     setTodoData(todos.entries);
   };
-  fetchTodos();
+  useEffect(() => {
+    fetchTodos();
+  },[]);
 
   const [todoData, setTodoData] = useState([]);
   const [showTodomodal, setShowTodoModla] = useState(false);
@@ -90,8 +104,9 @@ const App = () => {
             onUpdateTodo={updateTodo}
           />
           <div className="pager-comp">
-            <button>Previous</button>
-            <button>Next</button>
+            <button onClick={() => fetchTodosPage(1)}>Page 1</button>
+            <button onClick={() => fetchTodosPage(2)}>Page 2</button>
+            <button onClick={() => fetchTodosPage(3)}>Page 3</button>
           </div>
         </Card>
       </div>
