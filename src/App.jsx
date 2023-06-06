@@ -6,7 +6,7 @@ import Card from "./components/UI/card/card";
 import TodoList from "./components/TodoList/todoList";
 import Button from "./components/UI/button/button";
 import TodoModel from "./components/UI/model/todoModel";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 // import Tododata from "./assets/dummyData.json";
 import {
@@ -46,6 +46,8 @@ const App = () => {
     res.status == "OK"
       ? toast.success("Todo added Succesfully !")
       : toast.error("Failed to fetch todos!");
+    // refreshn todo data
+    res.status == "OK" && fetchTodos();
   };
 
   const deleteTodo = async (id) => {
@@ -54,6 +56,7 @@ const App = () => {
     data.status == 200
       ? toast.success("Todo deleted successfully!")
       : toast.error("Failed to delete todo!");
+    data.status == 200 && fetchTodos();
   };
 
   const updateTodo = async (id, updatedTodo) => {
@@ -61,15 +64,11 @@ const App = () => {
     // toast.info("Updating todo !");
     const update = await updateATodo(id, updatedTodo);
 
-    setTodoData((prevState) =>
-      prevState.map((todo) =>
-        todo.key === id ? { ...todo, ...updatedTodo } : todo
-      )
-    );
-
     update.status == "OK"
       ? toast.success("Todo updated successfully!")
       : toast.error("Failed to Update todo!");
+    // refresh todos data
+    update.status == "OK" && fetchTodos();
   };
 
   // console.log("curent data ", todoData[0]);
