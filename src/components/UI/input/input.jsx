@@ -11,7 +11,6 @@ const InputGroup = (props) => {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    props.onClose;
     //  check if its aading data
     props.addTodo &&
       props.onAddTodo({
@@ -30,6 +29,8 @@ const InputGroup = (props) => {
         completed: event.target.todoStatus.value,
         lastUpdated: new Date().toISOString(),
       });
+
+    props.onDismiss();
   };
 
   return (
@@ -171,6 +172,7 @@ InputGroup.propTypes = {
   onDeleteTodo: propTypes.func,
   onUpdateTodo: propTypes.func,
   onClose: propTypes.func,
+  onDismiss: propTypes.func,
 };
 
 export default InputGroup;

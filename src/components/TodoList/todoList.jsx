@@ -9,6 +9,11 @@ const TodoList = (props) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [todoToDelete, setTodoToDelete] = useState(null);
 
+  const dismissModal = () => {
+    setShowDeleteModal(false);
+    setShowDeleteModal(false);
+  };
+
   const todos = props.data.map((todo) => {
     return (
       <div className={styles.TodoCard__listItem} key={todo.key}>
@@ -71,6 +76,7 @@ const TodoList = (props) => {
           updatetodo={todoToUpdate}
           onUpdateTodo={props.onUpdateTodo}
           onClose={() => setShowUpdateModel(false)}
+          onDismiss={dismissModal}
         />
       )}
       {showDeleteModal && (
@@ -78,6 +84,7 @@ const TodoList = (props) => {
           deletetodo={todoToDelete}
           onDeleteTodo={props.onDeleteTodo}
           onClose={() => setShowDeleteModal(false)}
+          onDismiss={dismissModal}
         />
       )}
       <section className={styles.TodoCard__list}>

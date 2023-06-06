@@ -24,6 +24,10 @@ const App = () => {
   const [todoData, setTodoData] = useState([]);
   const [showTodomodal, setShowTodoModla] = useState(false);
 
+  const dismissModal = () => {
+    setShowTodoModla(false)
+  }
+
   const addTodos = async (todo) => {
     // send the todo request
     const res = await addNewTodo(todo);
@@ -70,6 +74,7 @@ const App = () => {
           onClose={() => setShowTodoModla(false)}
           addTodo={true}
           onAddTodo={addTodos}
+          onDismiss={dismissModal}
         />
       )}
 

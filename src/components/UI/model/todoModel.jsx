@@ -24,6 +24,7 @@ const TodoModel = (props) => {
                 deletetodo={props.deletetodo}
                 onDeleteTodo={props.onDeleteTodo}
                 onClose={props.onClose}
+                onDismiss={props.onDismiss}
               />
             )}
 
@@ -32,12 +33,16 @@ const TodoModel = (props) => {
                 updateData={props.updatetodo}
                 onUpdateTodo={props.onUpdateTodo}
                 onClose={props.onClose}
-
+                onDismiss={props.onDismiss}
               />
             )}
 
             {props.addTodo && (
-              <InputGroup addTodo={props.addTodo} onAddTodo={props.onAddTodo} />
+              <InputGroup
+                addTodo={props.addTodo}
+                onAddTodo={props.onAddTodo}
+                onDismiss={props.onDismiss}
+              />
             )}
           </div>
         </div>
@@ -64,6 +69,7 @@ TodoModel.propTypes = {
   onAddTodo: propTypes.func,
   onDeleteTodo: propTypes.func,
   onUpdateTodo: propTypes.func,
+  onDismiss: propTypes.func,
 };
 
 export default TodoModel;
