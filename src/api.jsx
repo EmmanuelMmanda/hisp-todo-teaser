@@ -44,6 +44,8 @@ export const addNewTodo = async (todo) => {
     const response = await axios.post(ADD_TODO_URL(todo), todo, {
       headers: AUTH_HEADERS,
     });
+  console.log(" added ", response.data);
+
     return response.data;
   } catch (error) {
     console.error("Error adding todo:", error);
