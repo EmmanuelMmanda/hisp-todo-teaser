@@ -25,10 +25,11 @@ const App = () => {
   const [showTodomodal, setShowTodoModla] = useState(false);
 
   const dismissModal = () => {
-    setShowTodoModla(false)
-  }
+    setShowTodoModla(false);
+  };
 
   const addTodos = async (todo) => {
+    toast.info("Adding todo !");
     // send the todo request
     const res = await addNewTodo(todo);
     res.status == "OK"
@@ -37,6 +38,8 @@ const App = () => {
   };
 
   const deleteTodo = async (id) => {
+    toast.info("deleting todo !");
+
     const data = await deleteATodo(id);
     setTodoData((prevState) => {
       const updatedTodos = prevState.filter((todo) => todo.key !== id);
@@ -49,6 +52,8 @@ const App = () => {
 
   const updateTodo = async (id, updatedTodo) => {
     console.log("Updating todo with id:", id);
+    toast.info("Updating todo !");
+
     const update = await updateATodo(id, updatedTodo);
     console.log(update);
     update.status == "OK"
