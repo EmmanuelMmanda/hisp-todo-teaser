@@ -44,10 +44,11 @@ export const addNewTodo = async (todo) => {
     const response = await axios.post(ADD_TODO_URL(todo), todo, {
       headers: AUTH_HEADERS,
     });
-  console.log(" added ", response.data);
-
+    console.log(" added ", response.data);
+   
     return response.data;
   } catch (error) {
+    toast.error("Error adding todo");
     console.error("Error adding todo:", error);
     throw error;
   }
@@ -56,7 +57,7 @@ export const addNewTodo = async (todo) => {
 // Update a todo
 export const updateATodo = async (id, todo) => {
   try {
-    console.log(UPDATE_TODO_URL(id));
+    console.log(todo);
     const response = await axios.put(UPDATE_TODO_URL(id), todo, {
       headers: AUTH_HEADERS,
     });

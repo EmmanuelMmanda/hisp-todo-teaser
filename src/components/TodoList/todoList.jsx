@@ -11,7 +11,7 @@ const TodoList = (props) => {
 
   const dismissModal = () => {
     setShowDeleteModal(false);
-    setShowDeleteModal(false);
+    setShowUpdateModel(false);
   };
 
   const todos = props.data.map((todo) => {
@@ -39,7 +39,7 @@ const TodoList = (props) => {
             ) : (
               <span className={styles.TodoCard__listItem__date}>
                 <box-icon name="list-check" color="#ff0000"></box-icon>
-                <span>pending</span>
+                <span>Not Completed</span>
               </span>
             )}
           </div>

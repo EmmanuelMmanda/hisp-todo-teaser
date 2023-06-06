@@ -6,7 +6,7 @@ import Card from "./components/UI/card/card";
 import TodoList from "./components/TodoList/todoList";
 import Button from "./components/UI/button/button";
 import TodoModel from "./components/UI/model/todoModel";
-import { useEffect, useState } from "react";
+import {useState } from "react";
 import { toast } from "react-toastify";
 // import Tododata from "./assets/dummyData.json";
 import { fetchAllTodos, addNewTodo, deleteATodo, updateATodo } from "./api";
@@ -16,10 +16,7 @@ const App = () => {
     const todos = await fetchAllTodos();
     setTodoData(todos.entries);
   };
-
-  useEffect(() => {
-    fetchTodos();
-  });
+  fetchTodos();
 
   const [todoData, setTodoData] = useState([]);
   const [showTodomodal, setShowTodoModla] = useState(false);
@@ -29,7 +26,7 @@ const App = () => {
   };
 
   const addTodos = async (todo) => {
-    toast.info("Adding todo !");
+    // toast.info("Adding todo !");
     // send the todo request
     const res = await addNewTodo(todo);
     res.status == "OK"
@@ -38,13 +35,8 @@ const App = () => {
   };
 
   const deleteTodo = async (id) => {
-    toast.info("deleting todo !");
-
+    // toast.info("deleting todo !");
     const data = await deleteATodo(id);
-    setTodoData((prevState) => {
-      const updatedTodos = prevState.filter((todo) => todo.key !== id);
-      return updatedTodos;
-    });
     data.status == 200
       ? toast.success("Todo deleted successfully!")
       : toast.error("Failed to delete todo!");
@@ -52,8 +44,7 @@ const App = () => {
 
   const updateTodo = async (id, updatedTodo) => {
     console.log("Updating todo with id:", id);
-    toast.info("Updating todo !");
-
+    // toast.info("Updating todo !");
     const update = await updateATodo(id, updatedTodo);
     console.log(update);
     update.status == "OK"
@@ -68,7 +59,7 @@ const App = () => {
       <ToastContainer
         position="top-center"
         limit={2}
-        autoClose={5000}
+        autoClose={1500}
         hideProgressBar={false}
         closeOnClick
         draggable

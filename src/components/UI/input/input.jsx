@@ -3,15 +3,14 @@ import styles from "./input.module.css";
 import propTypes from "prop-types";
 import shortid from "shortid";
 
-// generate a random id for each todo
-const uniqueId = shortid.generate();
-
 const InputGroup = (props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
     //  check if its aading data
+    // generate a random id for each todo
+    const uniqueId = shortid.generate();
     props.addTodo &&
       props.onAddTodo({
         id: `Todo-${uniqueId}`,
@@ -21,6 +20,7 @@ const InputGroup = (props) => {
         description: event.target.description.value,
         lastUpdated: new Date().toISOString(),
       });
+
     props.updateData &&
       props.onUpdateTodo(event.target.key.value, {
         id: event.target.key.value,
@@ -29,6 +29,8 @@ const InputGroup = (props) => {
         completed: event.target.todoStatus.value,
         lastUpdated: new Date().toISOString(),
       });
+
+    props.onUpdateTodo && (() => props.onDismiss);
 
     props.onDismiss();
   };
@@ -90,8 +92,8 @@ const InputGroup = (props) => {
                 className={styles.select}
                 defaultValue={props.updateData.value.completed}
               >
-                <option value="completed">Completed</option>
-                <option value="pending">Pendig</option>
+                <option value="true">Completed</option>
+                <option value="false">Not Completed</option>
               </select>
               <input type="hidden" name="key" value={props.updateData.key} />
             </>
