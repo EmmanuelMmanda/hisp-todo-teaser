@@ -18,9 +18,12 @@ import {
 } from "./api";
 
 const App = () => {
+  const [todoData, setTodoData] = useState([]);
+  const [showTodomodal, setShowTodoModla] = useState(false);
+
   const fetchTodosPage = async (pageno) => {
     const todos = await fetchTodosByPage(pageno);
-    // console.log(todos);    
+    // console.log(todos);
     setTodoData(todos.entries);
   };
 
@@ -30,10 +33,7 @@ const App = () => {
   };
   useEffect(() => {
     fetchTodos();
-  },[]);
-
-  const [todoData, setTodoData] = useState([]);
-  const [showTodomodal, setShowTodoModla] = useState(false);
+  }, []);
 
   const dismissModal = () => {
     setShowTodoModla(false);
@@ -60,7 +60,13 @@ const App = () => {
     console.log("Updating todo with id:", id);
     // toast.info("Updating todo !");
     const update = await updateATodo(id, updatedTodo);
-    console.log(update);
+
+    setTodoData((prevState) =>
+      prevState.map((todo) =>
+        todo.key === id ? { ...todo, ...updatedTodo } : todo
+      )
+    );
+
     update.status == "OK"
       ? toast.success("Todo updated successfully!")
       : toast.error("Failed to Update todo!");

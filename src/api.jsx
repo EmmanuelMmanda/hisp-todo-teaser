@@ -40,7 +40,7 @@ export const fetchAllTodos = async () => {
 };
 // adding a new todo passing todo-id in the url
 export const addNewTodo = async (todo) => {
-  console.log("to be added ", todo);
+  // console.log("to be added ", todo);
   try {
     const response = await axios.post(ADD_TODO_URL(todo), todo, {
       headers: AUTH_HEADERS,
