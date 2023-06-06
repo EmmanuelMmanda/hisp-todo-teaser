@@ -36,7 +36,9 @@ cd hisp-todo-teaser
 npm install
 ```
 
-Start development erver
+Start development server
 ```node
 npm run dev
 ```
+
+

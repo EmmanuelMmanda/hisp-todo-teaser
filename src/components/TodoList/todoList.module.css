@@ -52,3 +52,27 @@
 .TodoCard__listItem__date {
   display: flex;
 }
+
+.scrollArea {
+  height: 400px;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  width: 350px;
+}
+
+/* scrool bar modifications fro different brwoser support */
+.scrollArea::-webkit-scrollbar {
+  width: 5px;
+  background-color: var(--card-background);
+}
+
+.scrollArea::-webkit-scrollbar-thumb {
+  background-color: var(--main-color);
+  border-radius: 5px;
+}
+
+/* Firefox */
+.scrollArea {
+  scrollbar-color: rgb(196, 196, 208) #f1f1f1;
+  scrollbar-width: thin;
+}

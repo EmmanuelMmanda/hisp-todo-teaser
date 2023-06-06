@@ -6,7 +6,7 @@ import Card from "./components/UI/card/card";
 import TodoList from "./components/TodoList/todoList";
 import Button from "./components/UI/button/button";
 import TodoModel from "./components/UI/model/todoModel";
-import {useState } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
 // import Tododata from "./assets/dummyData.json";
 import { fetchAllTodos, addNewTodo, deleteATodo, updateATodo } from "./api";
@@ -89,6 +89,10 @@ const App = () => {
             onDeleteTodo={deleteTodo}
             onUpdateTodo={updateTodo}
           />
+          <div className="pager-comp">
+            <button>Previous</button>
+            <button>Next</button>
+          </div>
         </Card>
       </div>
     </div>

@@ -92,7 +92,7 @@ const TodoList = (props) => {
 
         {/* actual todo */}
         {props.data.length === 0 && <p>No tasks !</p>}
-        {todos}
+        <div className={styles.scrollArea}>{todos}</div>
       </section>
     </>
   );
