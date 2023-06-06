@@ -26,11 +26,11 @@ Follow these steps to install and run the HISP To-do Online Teaser:
 
 Clone the project repository from GitHub:
 ```bash
-git clone https://github.com/EmmanuelMmanda/hisp-todo.git
+git clone https://github.com/EmmanuelMmanda/hisp-todo-teaser.git
 ```
 
 ```bash
-cd hisp-todo
+cd hisp-todo-teaser
 ```
 ```node
 npm install
