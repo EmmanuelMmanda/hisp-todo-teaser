@@ -20,7 +20,7 @@ import {
 const App = () => {
   const fetchTodosPage = async (pageno) => {
     const todos = await fetchTodosByPage(pageno);
-    console.log(todos);
+    // console.log(todos);    
     setTodoData(todos.entries);
   };
 
